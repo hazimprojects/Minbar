@@ -18,7 +18,11 @@ function Login() {
     setRalat("")
     const { error } = await supabase.auth.signInWithPassword({ email, password })
     setLoading(false)
-    if (error) setRalat("Emel atau kata laluan salah.")
+    if (error) {
+      if (error.message === "Invalid login credentials") setRalat("Emel atau kata laluan salah.")
+      else if (error.status === 429 || /rate limit/i.test(error.message)) setRalat("Terlalu banyak percubaan — sila tunggu sebentar dan cuba lagi.")
+      else setRalat(error.message || "Gagal log masuk.")
+    }
   }
 
   return (
