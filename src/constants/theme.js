@@ -1,0 +1,63 @@
+const lightTheme = {
+  primary: "#2563eb",
+  primaryDk: "#1d4ed8",
+  primaryLt: "#eff6ff",
+  primaryGrad: "linear-gradient(135deg, #60a5fa 0%, #2563eb 60%, #1d4ed8 100%)",
+  primaryShadow: "0 2px 10px rgba(37,99,235,0.35)",
+  accent: "#3b82f6",
+  danger: "#ef4444",
+  dangerLt: "#fef2f2",
+  warning: "#f59e0b",
+  warningLt: "#fffbeb",
+  purple: "#8b5cf6",
+  purpleLt: "#f5f3ff",
+  green: "#10b981",
+  greenLt: "#ecfdf5",
+  blue: "#3b82f6",
+  blueLt: "#eff6ff",
+  bg: "#f8fafc",
+  card: "#ffffff",
+  txt: "#0f172a",
+  txtMuted: "#64748b",
+  border: "#e2e8f0",
+  shadow: "0 1px 3px rgba(15,23,42,0.06), 0 1px 2px rgba(15,23,42,0.04)",
+  shadowMd: "0 4px 20px rgba(15,23,42,0.10)",
+  gold: "#c9a227",
+  navy: "#1e3a5f",
+  navyDk: "#0f2340",
+}
+
+const darkTheme = {
+  primary: "#60a5fa",
+  primaryDk: "#3b82f6",
+  primaryLt: "#1e3a5f",
+  primaryGrad: "linear-gradient(135deg, #60a5fa 0%, #3b82f6 60%, #2563eb 100%)",
+  primaryShadow: "0 2px 10px rgba(37,99,235,0.35)",
+  accent: "#60a5fa",
+  danger: "#f87171",
+  dangerLt: "#450a0a",
+  warning: "#fbbf24",
+  warningLt: "#422006",
+  purple: "#a78bfa",
+  purpleLt: "#2e1065",
+  green: "#34d399",
+  greenLt: "#064e3b",
+  blue: "#60a5fa",
+  blueLt: "#1e3a5f",
+  bg: "#0f172a",
+  card: "#1e293b",
+  txt: "#f1f5f9",
+  txtMuted: "#94a3b8",
+  border: "#334155",
+  shadow: "0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2)",
+  shadowMd: "0 4px 20px rgba(0,0,0,0.4)",
+  gold: "#c9a227",
+  navy: "#1e3a5f",
+  navyDk: "#0f2340",
+}
+
+/** @deprecated Guna useTheme() untuk warna dinamik; kekal untuk halaman
+ *  awam (LaporanBendahari) yang tiada ThemeProvider. */
+const C = lightTheme
+
+export { C, lightTheme, darkTheme }
