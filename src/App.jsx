@@ -4,7 +4,6 @@ import { ThemeProvider, useTheme } from "./context/ThemeContext.jsx"
 import Login from "./pages/Login.jsx"
 import BiroPendidikan from "./pages/BiroPendidikan.jsx"
 import LaporanBendahari from "./pages/LaporanBendahari.jsx"
-import ResetPassword from "./pages/ResetPassword.jsx"
 
 function Termuat() {
   const { C } = useTheme()
@@ -17,15 +16,11 @@ function Termuat() {
 
 function AppDalaman() {
   const [session, setSession] = useState(undefined) // undefined = belum semak, null = tiada sesi
-  const [pemulihan, setPemulihan] = useState(false)
   const [bendahariToken] = useState(() => new URLSearchParams(window.location.search).get("bendahari"))
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => setSession(data.session))
-    const { data: sub } = supabase.auth.onAuthStateChange((event, s) => {
-      if (event === "PASSWORD_RECOVERY") setPemulihan(true)
-      setSession(s)
-    })
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, s) => setSession(s))
     return () => sub.subscription.unsubscribe()
   }, [])
 
@@ -36,10 +31,6 @@ function AppDalaman() {
     }} />
   )
   if (session === undefined) return <Termuat />
-  if (pemulihan) return <ResetPassword onSiap={() => {
-    window.history.replaceState({}, "", window.location.pathname)
-    setPemulihan(false)
-  }} />
   if (!session) return <Login />
 
   return (
