@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react"
-import { supabase } from "../supabase.js"
+import { supabase, EMEL_AKAUN } from "../supabase.js"
 import { useTheme } from "../context/ThemeContext.jsx"
 import {
   ChevronDown, ChevronRight, Printer, Plus, Trash2,
   Users, Calendar, X, Check, MoreVertical, Download,
   BookOpen, ArrowLeft, Zap, FileText, Wallet, Star,
-  LayoutList, RotateCcw, Upload
+  LayoutList, RotateCcw, Upload, LogOut, Eye, EyeOff
 } from "lucide-react"
 import LaporanBendahari from "./LaporanBendahari.jsx"
 
@@ -487,6 +487,11 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
   const [konfirmasiPadam, setKonfirmasiPadam] = useState(null)
   const [menuBulan, setMenuBulan] = useState(null)
   const [tab, setTab] = useState("jadual")
+  const [modalLogKeluar, setModalLogKeluar] = useState(false)
+  const [passwordLogKeluar, setPasswordLogKeluar] = useState("")
+  const [tunjukPasswordLogKeluar, setTunjukPasswordLogKeluar] = useState(false)
+  const [ralatLogKeluar, setRalatLogKeluar] = useState("")
+  const [loadingLogKeluar, setLoadingLogKeluar] = useState(false)
   const [notisAutoJana, setNotisAutoJana] = useState(null)
   const [senaraiPengisian, setSenaraiPengisian] = useState([])
   const [senaraiKitab, setSenaraiKitab] = useState([])
@@ -803,6 +808,17 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
     await supabase.from("biro_bulan").delete().eq("id", id)
     setKonfirmasiPadam(null)
     await muatSemua()
+  }
+
+  async function handleLogKeluar(e) {
+    e.preventDefault()
+    if (!passwordLogKeluar) return setRalatLogKeluar("Sila masuk kata laluan.")
+    setLoadingLogKeluar(true)
+    setRalatLogKeluar("")
+    const { error } = await supabase.auth.signInWithPassword({ email: EMEL_AKAUN, password: passwordLogKeluar })
+    setLoadingLogKeluar(false)
+    if (error) setRalatLogKeluar("Kata laluan salah.")
+    else onKembali()
   }
 
   async function tambahPenceramah() {
@@ -3069,13 +3085,13 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
     <div style={{ flex: 1, display: "flex", flexDirection: "column", overflow: "hidden", background: C.bg }}>
       {/* Navbar */}
       <div style={navbarStyle}>
-        <button onClick={onKembali} style={{ background: "none", border: "none", cursor: "pointer", padding: "8px 10px", display: "flex", alignItems: "center", color: "white" }}>
-          <ArrowLeft size={20} />
-        </button>
-        <div style={{ flex: 1 }}>
+        <div style={{ flex: 1, padding: "0 6px" }}>
           <div style={{ fontWeight: "700", fontSize: 16, color: "white" }}>Biro Pendidikan</div>
           <div style={{ fontSize: 10, color: C.gold, letterSpacing: 0.5 }}>Masjid Parit Setongkat</div>
         </div>
+        <button onClick={() => setModalLogKeluar(true)} style={{ background: "none", border: "none", cursor: "pointer", padding: "8px 10px", display: "flex", alignItems: "center", color: "white" }}>
+          <LogOut size={20} />
+        </button>
       </div>
 
       <div style={{ flex: 1, overflowY: "auto", background: C.bg }}>
@@ -3221,6 +3237,37 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
               <button onClick={() => padamBulan(konfirmasiPadam.id)} style={{ flex: 1, padding: "10px", borderRadius: 10, border: "none", background: C.danger, color: "white", cursor: "pointer", fontSize: 13, fontWeight: "700" }}>Padam</button>
             </div>
           </div>
+        </div>
+      )}
+
+      {/* Modal Log Keluar */}
+      {modalLogKeluar && (
+        <div style={{ position: "fixed", inset: 0, zIndex: 10000, background: "rgba(0,0,0,0.5)", display: "flex", alignItems: "center", justifyContent: "center", padding: "0 20px" }}>
+          <form onSubmit={handleLogKeluar} style={{ background: C.card, borderRadius: 16, padding: 24, width: "100%", maxWidth: 320, textAlign: "center" }}>
+            <LogOut size={32} color={C.navy} style={{ margin: "0 auto 12px", display: "block" }} />
+            <div style={{ fontWeight: "700", fontSize: 15, marginBottom: 8 }}>Log Keluar?</div>
+            <div style={{ fontSize: 12, color: C.txtMuted, marginBottom: 16 }}>Sahkan kata laluan untuk log keluar.</div>
+            <div style={{ position: "relative", marginBottom: 8 }}>
+              <input
+                type={tunjukPasswordLogKeluar ? "text" : "password"}
+                placeholder="Kata Laluan"
+                value={passwordLogKeluar}
+                autoFocus
+                onChange={e => { setPasswordLogKeluar(e.target.value); setRalatLogKeluar("") }}
+                style={{ ...inp, padding: "10px 40px 10px 12px", fontSize: 13 }}
+              />
+              <button type="button" onClick={() => setTunjukPasswordLogKeluar(v => !v)} style={{ position: "absolute", right: 8, top: "50%", transform: "translateY(-50%)", background: "none", border: "none", cursor: "pointer", padding: 4, color: C.txtMuted, display: "flex" }}>
+                {tunjukPasswordLogKeluar ? <EyeOff size={16} /> : <Eye size={16} />}
+              </button>
+            </div>
+            {ralatLogKeluar && <div style={{ fontSize: 12, color: C.danger, marginBottom: 8 }}>{ralatLogKeluar}</div>}
+            <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+              <button type="button" onClick={() => { setModalLogKeluar(false); setPasswordLogKeluar(""); setRalatLogKeluar("") }} style={{ flex: 1, padding: "10px", borderRadius: 10, border: `1px solid ${C.border}`, background: "none", cursor: "pointer", fontSize: 13 }}>Batal</button>
+              <button type="submit" disabled={loadingLogKeluar} style={{ flex: 1, padding: "10px", borderRadius: 10, border: "none", background: C.navy, color: "white", cursor: loadingLogKeluar ? "default" : "pointer", fontSize: 13, fontWeight: "700", opacity: loadingLogKeluar ? 0.7 : 1 }}>
+                {loadingLogKeluar ? "Menyemak…" : "Log Keluar"}
+              </button>
+            </div>
+          </form>
         </div>
       )}
 

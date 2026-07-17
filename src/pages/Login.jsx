@@ -1,9 +1,7 @@
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
-import { supabase } from "../supabase.js"
+import { supabase, EMEL_AKAUN } from "../supabase.js"
 import { useTheme } from "../context/ThemeContext.jsx"
-
-const EMEL_AKAUN = "hazim.eduhub@gmail.com"
 
 function Login() {
   const { C } = useTheme()
