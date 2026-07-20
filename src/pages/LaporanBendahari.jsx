@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import { supabase } from "../supabase.js"
+import { importSelamat } from "../importSelamat.js"
 import { C } from "../constants/theme.js"
 import { Download, X } from "lucide-react"
 
@@ -221,7 +222,7 @@ export default function LaporanBendahari({ token, onAdminLogin, hideFab = false 
       for (const id of bakiSaguhatiIds) coveredIds.add(id)
 
       const [{ jsPDF }, { default: autoTable }] = await Promise.all([
-        import("jspdf"), import("jspdf-autotable")
+        importSelamat(() => import("jspdf")), importSelamat(() => import("jspdf-autotable"))
       ])
       const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" })
       const pageW = doc.internal.pageSize.getWidth()
@@ -438,8 +439,8 @@ export default function LaporanBendahari({ token, onAdminLogin, hideFab = false 
   }
 
   async function renderPdfKeImej(arrayBuffer) {
-    const pdfjs = await import("pdfjs-dist")
-    const workerUrl = (await import("pdfjs-dist/build/pdf.worker.min.mjs?url")).default
+    const pdfjs = await importSelamat(() => import("pdfjs-dist"))
+    const workerUrl = (await importSelamat(() => import("pdfjs-dist/build/pdf.worker.min.mjs?url"))).default
     pdfjs.GlobalWorkerOptions.workerSrc = workerUrl
     const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise
     const imgs = []

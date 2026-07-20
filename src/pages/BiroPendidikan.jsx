@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react"
 import { supabase, EMEL_AKAUN } from "../supabase.js"
+import { importSelamat } from "../importSelamat.js"
 import { useTheme } from "../context/ThemeContext.jsx"
 import {
   ChevronDown, ChevronRight, Printer, Plus, Trash2,
@@ -2219,8 +2220,8 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
 
       // Jana PDF sebenar dengan jsPDF + autoTable (baris tidak terpotong, header berulang)
       const [{ jsPDF }, { default: autoTable }] = await Promise.all([
-        import("jspdf"),
-        import("jspdf-autotable")
+        importSelamat(() => import("jspdf")),
+        importSelamat(() => import("jspdf-autotable"))
       ])
       const doc = new jsPDF({ orientation: "landscape", unit: "mm", format: "a4" })
       const pageW = doc.internal.pageSize.getWidth()
@@ -2464,8 +2465,8 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
   }
 
   async function renderPdfKeImej(arrayBuffer) {
-    const pdfjs = await import("pdfjs-dist")
-    const workerUrl = (await import("pdfjs-dist/build/pdf.worker.min.mjs?url")).default
+    const pdfjs = await importSelamat(() => import("pdfjs-dist"))
+    const workerUrl = (await importSelamat(() => import("pdfjs-dist/build/pdf.worker.min.mjs?url"))).default
     pdfjs.GlobalWorkerOptions.workerSrc = workerUrl
     const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise
     const imgs = []
@@ -2722,7 +2723,7 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
       }
 
       // Render canvas terus — jangan guna html2pdf (ia paginate automatik)
-      const { default: html2canvas } = await import("html2canvas")
+      const { default: html2canvas } = await importSelamat(() => import("html2canvas"))
       const canvas = await html2canvas(el, {
         scale: 1.5,
         useCORS: true,
@@ -2733,7 +2734,7 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
       })
 
       // Paksa imej isi penuh 1 halaman A2 landscape (594 × 420 mm)
-      const { jsPDF } = await import("jspdf")
+      const { jsPDF } = await importSelamat(() => import("jspdf"))
       const namaFail = `Jadual_Kuliah_${bulanAktif.label.replace(/\s/g, "_")}.pdf`
       const pdf = new jsPDF({ unit: "mm", format: "a2", orientation: "landscape" })
       pdf.addImage(canvas.toDataURL("image/jpeg", 0.95), "JPEG", 0, 0, 594, 420)
@@ -2824,7 +2825,7 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
       const SLOTS_PER_PAGE = COLS * MAX_ROWS
       const PHOTO_SZ = 150
 
-      const { jsPDF } = await import("jspdf")
+      const { jsPDF } = await importSelamat(() => import("jspdf"))
       const pdf = new jsPDF({ unit: "mm", format: "a4", orientation: "landscape" })
       let pdfPageCount = 0
 
