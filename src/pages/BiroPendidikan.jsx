@@ -1133,13 +1133,13 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
     }
     if (isMajlisBesar) {
       // Majlis besar: masjid name only — not specific to one biro
-      ctx.fillStyle = "rgba(255,255,255,0.92)"; ctx.font = "700 20px Lato"; ctx.textAlign = "center"
-      ctx.fillText((data?.masjid || "Masjid Parit Setongkat").toUpperCase(), CX, LOGO_CY + LOGO_R + 28)
+      ctx.fillStyle = "rgba(255,255,255,0.92)"; ctx.font = "700 24px Lato"; ctx.textAlign = "center"
+      ctx.fillText((data?.masjid || "Masjid Parit Setongkat").toUpperCase(), CX, LOGO_CY + LOGO_R + 30)
     } else {
-      ctx.fillStyle = "rgba(255,255,255,0.82)"; ctx.font = "700 21px Lato"; ctx.textAlign = "center"
-      ctx.fillText("BIRO PENDIDIKAN DAN DAKWAH", CX, LOGO_CY + LOGO_R + 22)
-      ctx.fillStyle = "rgba(255,255,255,0.52)"; ctx.font = "400 14px Lato"
-      ctx.fillText(data?.masjid || "Masjid Parit Setongkat", CX, LOGO_CY + LOGO_R + 40)
+      ctx.fillStyle = "rgba(255,255,255,0.82)"; ctx.font = "700 25px Lato"; ctx.textAlign = "center"
+      ctx.fillText("BIRO PENDIDIKAN DAN DAKWAH", CX, LOGO_CY + LOGO_R + 24)
+      ctx.fillStyle = "rgba(255,255,255,0.52)"; ctx.font = "400 17px Lato"
+      ctx.fillText(data?.masjid || "Masjid Parit Setongkat", CX, LOGO_CY + LOGO_R + 44)
     }
 
     // ── Ayat / Hadith section ──
@@ -1150,16 +1150,16 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
 
     if (isMajlisBesar) {
       // ── Majlis Besar: Ayat Quran (single line, shrink to fit) ──
-      let abf = 42; ctx.font = `400 ${abf}px Amiri`
-      while (abf > 26 && ctx.measureText(mbd.ayat).width > maxAW) { abf -= 2; ctx.font = `400 ${abf}px Amiri` }
+      let abf = 48; ctx.font = `400 ${abf}px Amiri`
+      while (abf > 30 && ctx.measureText(mbd.ayat).width > maxAW) { abf -= 2; ctx.font = `400 ${abf}px Amiri` }
       ctx.save()
       ctx.direction = "rtl"; ctx.textAlign = "center"; ctx.fillStyle = ayatGrad; ctx.font = `400 ${abf}px Amiri`
       ctx.fillText(mbd.ayat, CX, HD_TOP)
       ctx.restore()
-      const terjemahTop = HD_TOP + abf * 0.3 + 40
+      const terjemahTop = HD_TOP + abf * 0.3 + 44
       // Terjemahan — 2 balanced lines
       const tWords = mbd.terjemah.split(" ")
-      let trf = 18; ctx.font = `italic 400 ${trf}px Lato`
+      let trf = 21; ctx.font = `italic 400 ${trf}px Lato`
       let tL1 = mbd.terjemah, tL2 = ""
       if (tWords.length > 2) {
         let best = { split: 1, diff: Infinity }
@@ -1169,25 +1169,25 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
         }
         tL1 = tWords.slice(0, best.split).join(" ")
         tL2 = tWords.slice(best.split).join(" ")
-        while (trf > 13 && (ctx.measureText(tL1).width > maxTW || ctx.measureText(tL2).width > maxTW)) {
+        while (trf > 16 && (ctx.measureText(tL1).width > maxTW || ctx.measureText(tL2).width > maxTW)) {
           trf--; ctx.font = `italic 400 ${trf}px Lato`
         }
       } else {
-        while (trf > 13 && ctx.measureText(tL1).width > maxTW) { trf--; ctx.font = `italic 400 ${trf}px Lato` }
+        while (trf > 16 && ctx.measureText(tL1).width > maxTW) { trf--; ctx.font = `italic 400 ${trf}px Lato` }
       }
       ctx.fillStyle = "rgba(255,255,255,0.88)"; ctx.textAlign = "center"
       ctx.fillText(tL1, CX, terjemahTop)
       if (tL2) ctx.fillText(tL2, CX, terjemahTop + trf + 10)
       const tLastY = tL2 ? terjemahTop + trf + 10 : terjemahTop
-      ctx.fillStyle = "rgba(255,255,255,0.45)"; ctx.font = "400 13px Lato"
-      ctx.fillText(`— ${mbd.src} —`, CX, tLastY + 28)
-      sepY = tLastY + 52
+      ctx.fillStyle = "rgba(255,255,255,0.45)"; ctx.font = "400 16px Lato"
+      ctx.fillText(`— ${mbd.src} —`, CX, tLastY + 30)
+      sepY = tLastY + 56
 
     } else {
       // ── Kuliah biasa: Hadith ──
       const hdLineRef = "مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ بِهِ طَرِيقًا إِلَى الْجَنَّةِ"
-      let ahf = 40; ctx.font = `400 ${ahf}px Amiri`
-      while (ahf > 26 && ctx.measureText(hdLineRef).width > maxAW) { ahf -= 2; ctx.font = `400 ${ahf}px Amiri` }
+      let ahf = 46; ctx.font = `400 ${ahf}px Amiri`
+      while (ahf > 30 && ctx.measureText(hdLineRef).width > maxAW) { ahf -= 2; ctx.font = `400 ${ahf}px Amiri` }
       let hdArabicBottomY
       ctx.save()
       ctx.direction = "rtl"; ctx.textAlign = "center"; ctx.fillStyle = ayatGrad; ctx.font = `400 ${ahf}px Amiri`
@@ -1205,23 +1205,23 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
         const tL1 = "\"Apabila kamu melalui taman-taman syurga, maka singgahlah.\""
         const tL2 = "Sahabat bertanya: \"Apakah taman-taman syurga itu?\""
         const tL3 = "Nabi SAW menjawab: \"Halaqah-halaqah zikir.\""
-        let trf = 17; ctx.font = `italic 400 ${trf}px Lato`
-        while (trf > 12 && (ctx.measureText(tL1).width > maxTW || ctx.measureText(tL2).width > maxTW || ctx.measureText(tL3).width > maxTW)) { trf--; ctx.font = `italic 400 ${trf}px Lato` }
-        const tL2Y = hdTransY + trf + 10, tL3Y = hdTransY + 2*(trf + 10), srcY = tL3Y + 28
+        let trf = 20; ctx.font = `italic 400 ${trf}px Lato`
+        while (trf > 15 && (ctx.measureText(tL1).width > maxTW || ctx.measureText(tL2).width > maxTW || ctx.measureText(tL3).width > maxTW)) { trf--; ctx.font = `italic 400 ${trf}px Lato` }
+        const tL2Y = hdTransY + trf + 10, tL3Y = hdTransY + 2*(trf + 10), srcY = tL3Y + 30
         ctx.fillStyle = "rgba(255,255,255,0.85)"
         ctx.fillText(tL1, CX, hdTransY); ctx.fillText(tL2, CX, tL2Y); ctx.fillText(tL3, CX, tL3Y)
-        ctx.fillStyle = "rgba(255,255,255,0.42)"; ctx.font = "400 14px Lato"
+        ctx.fillStyle = "rgba(255,255,255,0.42)"; ctx.font = "400 17px Lato"
         ctx.fillText("— Hadis Riwayat At-Tirmidzi —", CX, srcY)
-        sepY = srcY + 38
+        sepY = srcY + 40
       } else {
-        const hdTransY = hdArabicBottomY + ahf * 0.3 + 46
-        let trf = 20; ctx.font = `italic 400 ${trf}px Lato`
+        const hdTransY = hdArabicBottomY + ahf * 0.3 + 48
+        let trf = 23; ctx.font = `italic 400 ${trf}px Lato`
         const transTxt = "\"Sesiapa yang menempuh jalan menuntut ilmu, Allah mudahkan baginya jalan ke syurga.\""
-        while (trf > 14 && ctx.measureText(transTxt).width > maxTW) { trf--; ctx.font = `italic 400 ${trf}px Lato` }
+        while (trf > 17 && ctx.measureText(transTxt).width > maxTW) { trf--; ctx.font = `italic 400 ${trf}px Lato` }
         ctx.fillStyle = "rgba(255,255,255,0.85)"; ctx.fillText(transTxt, CX, hdTransY)
-        ctx.fillStyle = "rgba(255,255,255,0.42)"; ctx.font = "400 15px Lato"
-        ctx.fillText("— Hadis Riwayat Muslim —", CX, hdTransY + 40)
-        sepY = hdTransY + 70
+        ctx.fillStyle = "rgba(255,255,255,0.42)"; ctx.font = "400 18px Lato"
+        ctx.fillText("— Hadis Riwayat Muslim —", CX, hdTransY + 42)
+        sepY = hdTransY + 74
       }
     }
     ctx.save(); ctx.globalAlpha = 0.38; ctx.strokeStyle = GOLD; ctx.lineWidth = 1
@@ -1229,8 +1229,8 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
 
     // ── JEMPUTAN KE ──
     const jemputanLabel = isMajlisBesar ? "JEMPUTAN KHAS KE" : isMajlisZikir ? "JEMPUTAN KE" : "JEMPUTAN KE MAJLIS ILMU"
-    ctx.fillStyle = goldRgba(0.88); ctx.font = "700 26px Lato"; ctx.textAlign = "center"
-    ctx.fillText(jemputanLabel, CX, sepY + 36)
+    ctx.fillStyle = goldRgba(0.88); ctx.font = "700 30px Lato"; ctx.textAlign = "center"
+    ctx.fillText(jemputanLabel, CX, sepY + 38)
     ornLine(sepY + 62, 80, W - 80)
 
     // ── Program name ──
@@ -1239,7 +1239,7 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
     // Majlis besar: wrap into 2 balanced lines, keep font larger
     let titleLines, wf
     if (isMajlisBesar) {
-      wf = 84
+      wf = 92
       const words = waktuLabel.split(" ")
       let best = { split: 1, diff: Infinity }
       ctx.font = `900 ${wf}px 'Playfair Display'`
@@ -1250,10 +1250,10 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
       titleLines = words.length > 1
         ? [words.slice(0, best.split).join(" "), words.slice(best.split).join(" ")]
         : [waktuLabel]
-      while (titleLines.some(l => ctx.measureText(l).width > W - 60) && wf > 48) { wf -= 4; ctx.font = `900 ${wf}px 'Playfair Display'` }
+      while (titleLines.some(l => ctx.measureText(l).width > W - 60) && wf > 54) { wf -= 4; ctx.font = `900 ${wf}px 'Playfair Display'` }
     } else {
-      wf = 96; ctx.font = `900 ${wf}px 'Playfair Display'`
-      while (ctx.measureText(waktuLabel).width > W - 60 && wf > 56) { wf -= 4; ctx.font = `900 ${wf}px 'Playfair Display'` }
+      wf = 104; ctx.font = `900 ${wf}px 'Playfair Display'`
+      while (ctx.measureText(waktuLabel).width > W - 60 && wf > 62) { wf -= 4; ctx.font = `900 ${wf}px 'Playfair Display'` }
       titleLines = [waktuLabel]
     }
 
@@ -1288,7 +1288,7 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
 
     // ── Topic / Pengisian ──
     const LABEL_GENERIK = ["umum", "am", "tiada", "-", "–"]
-    let topicLines = [], tf = 52
+    let topicLines = [], tf = 58
     const slotPengisian = getPengisian(slot)
     const sepIdx = slotPengisian ? slotPengisian.indexOf(" – ") : -1
     const rawTopik = slotPengisian ? (sepIdx >= 0 ? slotPengisian.slice(0, sepIdx) : slotPengisian) : ""
@@ -1307,17 +1307,17 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
         return lines.slice(0, 2)
       }
       topicLines = buildTopikLines()
-      while (tf > 32) {
+      while (tf > 36) {
         ctx.font = `italic 700 ${tf}px 'Playfair Display'`
         if (!topicLines.some(l => ctx.measureText(l).width > maxTopikW)) break
         tf -= 4; topicLines = buildTopikLines()
       }
     }
     const hasKitab = kitabStr.length > 0
-    let kf = 32
+    let kf = 36
     if (hasKitab) {
       ctx.font = `italic 400 ${kf}px Lato`
-      while (ctx.measureText(kitabStr).width > maxTopikW && kf > 22) { kf -= 2; ctx.font = `italic 400 ${kf}px Lato` }
+      while (ctx.measureText(kitabStr).width > maxTopikW && kf > 26) { kf -= 2; ctx.font = `italic 400 ${kf}px Lato` }
     }
     // Majlis besar needs extra room so "— TAJUK —" label clears the ornament line
     const mbGap = isMajlisBesar ? 52 : 0
@@ -1337,7 +1337,7 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
       if (isMajlisBesar) {
         ctx.save()
         ctx.shadowColor = "rgba(0,0,0,1)"; ctx.shadowBlur = 20; ctx.shadowOffsetY = 3
-        ctx.fillStyle = goldRgba(0.98); ctx.font = "700 24px Lato"; ctx.textAlign = "center"
+        ctx.fillStyle = goldRgba(0.98); ctx.font = "700 28px Lato"; ctx.textAlign = "center"
         ctx.fillText("— T A J U K —", CX, ty0 - tf - 16)
         ctx.restore()
       }
@@ -1415,7 +1415,7 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
       const labelY = photoBottomY + 30
       ctx.save()
       ctx.shadowColor = "rgba(0,0,0,0.9)"; ctx.shadowBlur = 8; ctx.shadowOffsetY = 2
-      ctx.fillStyle = goldRgba(0.95); ctx.font = "700 19px Lato"; ctx.textAlign = "center"
+      ctx.fillStyle = goldRgba(0.95); ctx.font = "700 22px Lato"; ctx.textAlign = "center"
       ctx.fillText("PENCERAMAH JEMPUTAN", LCX, labelY)
       ctx.restore()
       ctx.save(); ctx.globalAlpha = 0.5; ctx.strokeStyle = GOLD; ctx.lineWidth = 1
@@ -1423,7 +1423,7 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
 
       // Gelaran "Al-Fadhil" in front of the name — wrap to at most 2 lines
       const fullName = `${prefix} ${slot.penceramah || ""}`.trim()
-      let snf = 32
+      let snf = 36
       const wrapName = () => {
         ctx.font = `700 ${snf}px 'Playfair Display'`
         let line = "", lines = []
@@ -1435,7 +1435,7 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
         return lines
       }
       let nameLines = wrapName()
-      while ((nameLines.length > 2 || nameLines.some(l => ctx.measureText(l).width > maxSideNameW)) && snf > 18) { snf -= 2; nameLines = wrapName() }
+      while ((nameLines.length > 2 || nameLines.some(l => ctx.measureText(l).width > maxSideNameW)) && snf > 20) { snf -= 2; nameLines = wrapName() }
       let snY = labelY + 32 + snf
       nameLines.forEach((ln, i) => {
         ctx.save(); ctx.shadowColor = "rgba(0,0,0,0.9)"; ctx.shadowBlur = 12; ctx.shadowOffsetY = 2
@@ -1456,13 +1456,13 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
 
       ctx.save()
       ctx.shadowColor = "rgba(0,0,0,1)"; ctx.shadowBlur = 20; ctx.shadowOffsetY = 3
-      ctx.fillStyle = goldRgba(0.98); ctx.font = "700 22px Lato"; ctx.textAlign = "center"
+      ctx.fillStyle = goldRgba(0.98); ctx.font = "700 26px Lato"; ctx.textAlign = "center"
       ctx.fillText("— T A J U K —", RCX, rightTop + 22)
       ctx.restore()
 
       // Topic lines — re-wrap for narrower right column
       const maxRTopW = W / 2 - 76
-      let rtf = 44
+      let rtf = 48
       let rTopLines = []
       if (topikStr) {
         const buildRL = () => {
@@ -1476,12 +1476,12 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
           return rll.slice(0, 3)
         }
         rTopLines = buildRL()
-        while (rtf > 24 && rTopLines.some(l => ctx.measureText(l).width > maxRTopW)) { rtf -= 4; rTopLines = buildRL() }
+        while (rtf > 28 && rTopLines.some(l => ctx.measureText(l).width > maxRTopW)) { rtf -= 4; rTopLines = buildRL() }
       }
-      let rkf = Math.min(kf, 26)
+      let rkf = Math.min(kf, 30)
       if (hasKitab) {
         ctx.font = `italic 400 ${rkf}px Lato`
-        while (ctx.measureText(kitabStr).width > maxRTopW && rkf > 16) { rkf -= 2; ctx.font = `italic 400 ${rkf}px Lato` }
+        while (ctx.measureText(kitabStr).width > maxRTopW && rkf > 18) { rkf -= 2; ctx.font = `italic 400 ${rkf}px Lato` }
       }
 
       let rtY = rightTop + 22 + 28
@@ -1516,11 +1516,11 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
       // ── Event details — tarikh / masa / lokasi ──
       const rPanelW = W / 2 - 24
       const rPanelX = RCX - rPanelW / 2
-      const evGap = 60                  // tighter spacing between rows
-      const evStartY = rightOrnY + 56   // push tarikh clear of the ornament line
+      const evGap = 66                  // tighter spacing between rows
+      const evStartY = rightOrnY + 58   // push tarikh clear of the ornament line
 
       // Masa — wrap to 2 balanced lines if the text is long
-      const masaFont = mbd?.masa ? "400 28px Lato" : "400 30px Lato"
+      const masaFont = mbd?.masa ? "400 32px Lato" : "400 34px Lato"
       const masaMaxW = rPanelW - 150
       ctx.font = masaFont
       let masaLines = [masaStr]
@@ -1534,7 +1534,7 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
         }
         if (best.diff < Infinity) masaLines = [mw.slice(0, best.split).join(" "), mw.slice(best.split).join(" ")]
       }
-      const masaLineH = 36
+      const masaLineH = 40
       const masaExtra = masaLines.length > 1 ? masaLineH : 0
 
       // Row baselines — bring the three details closer together
@@ -1569,17 +1569,17 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
 
       ctx.save()
       ctx.shadowColor = "rgba(0,0,0,0.95)"; ctx.shadowBlur = 14; ctx.shadowOffsetY = 3
-      withIcon(calIcon, 42, tarikhStr, RCX, tarikhY, "700 38px 'Playfair Display'", "#ffffff")
-      if (masaLines.length > 1) iconTextRows(clockIcon, 32, masaLines, RCX, masaY, masaFont, "rgba(255,255,255,0.88)", masaLineH)
-      else withIcon(clockIcon, 32, masaLines[0], RCX, masaY, masaFont, "rgba(255,255,255,0.88)")
-      withIcon(pinIcon, 30, data?.masjid || "Masjid Parit Setongkat", RCX, lokasiY, "700 29px Lato", goldRgba(0.98))
+      withIcon(calIcon, 46, tarikhStr, RCX, tarikhY, "700 42px 'Playfair Display'", "#ffffff")
+      if (masaLines.length > 1) iconTextRows(clockIcon, 35, masaLines, RCX, masaY, masaFont, "rgba(255,255,255,0.88)", masaLineH)
+      else withIcon(clockIcon, 35, masaLines[0], RCX, masaY, masaFont, "rgba(255,255,255,0.88)")
+      withIcon(pinIcon, 32, data?.masjid || "Masjid Parit Setongkat", RCX, lokasiY, "700 32px Lato", goldRgba(0.98))
       ctx.restore()
 
       // Invitation pill — fills the space below the info panel
       const inviteTxt = "Muslimin dan Muslimat dijemput hadir"
-      ctx.font = "italic 400 22px Lato"
+      ctx.font = "italic 400 24px Lato"
       const ipillW = ctx.measureText(inviteTxt).width + 56
-      const ipillH = 50
+      const ipillH = 54
       const ipillX = RCX - ipillW / 2
       const inviteCenterY = lokasiY + 64
       const ipillY = inviteCenterY - ipillH / 2
@@ -1593,7 +1593,7 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
       ctx.restore()
       ctx.save()
       ctx.shadowColor = "rgba(0,0,0,0.9)"; ctx.shadowBlur = 8; ctx.shadowOffsetY = 2
-      ctx.fillStyle = goldRgba(0.96); ctx.font = "italic 400 22px Lato"; ctx.textAlign = "center"
+      ctx.fillStyle = goldRgba(0.96); ctx.font = "italic 400 24px Lato"; ctx.textAlign = "center"
       ctx.fillText(inviteTxt, RCX, inviteCenterY + 8)
       ctx.restore()
 
@@ -1627,12 +1627,12 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
         ctx.beginPath(); ctx.arc(CX, PY_photo, photoR, 0, Math.PI * 2); ctx.stroke()
       }
 
-      const nameTop = PY_photo + photoR + 40
-      ctx.fillStyle = goldRgba(0.9); ctx.font = "italic 400 30px Lato"; ctx.textAlign = "center"
+      const nameTop = PY_photo + photoR + 42
+      ctx.fillStyle = goldRgba(0.9); ctx.font = "italic 400 33px Lato"; ctx.textAlign = "center"
       ctx.fillText(prefix, CX, nameTop)
       const nameMaxW = W - 80
-      let nf = 44; ctx.font = `700 ${nf}px 'Playfair Display'`
-      while (ctx.measureText(slot.penceramah || "").width > nameMaxW && nf > 26) { nf -= 3; ctx.font = `700 ${nf}px 'Playfair Display'` }
+      let nf = 48; ctx.font = `700 ${nf}px 'Playfair Display'`
+      while (ctx.measureText(slot.penceramah || "").width > nameMaxW && nf > 30) { nf -= 3; ctx.font = `700 ${nf}px 'Playfair Display'` }
       const nWords = (slot.penceramah || "").split(" ")
       let nLine = "", nY = nameTop + nf + 12
       for (const w of nWords) {
@@ -1643,16 +1643,16 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
       }
       if (nLine) { ctx.fillStyle = "#ffffff"; ctx.font = `700 ${nf}px 'Playfair Display'`; ctx.fillText(nLine, CX, nY) }
 
-      const detailsTopY = nY + 40
+      const detailsTopY = nY + 42
       ornLine(detailsTopY, 80, W - 80)
-      withIcon(calIcon, 42, tarikhStr, CX, detailsTopY + 54, "700 40px 'Playfair Display'", "#ffffff")
-      withIcon(clockIcon, 30, masaStr, CX, detailsTopY + 96, "300 32px Lato", "rgba(255,255,255,0.80)")
-      withIcon(pinIcon, 28, data?.masjid || "Masjid Parit Setongkat", CX, detailsTopY + 130, "italic 700 30px Lato", goldRgba(0.96))
+      withIcon(calIcon, 46, tarikhStr, CX, detailsTopY + 58, "700 44px 'Playfair Display'", "#ffffff")
+      withIcon(clockIcon, 33, masaStr, CX, detailsTopY + 102, "300 36px Lato", "rgba(255,255,255,0.80)")
+      withIcon(pinIcon, 31, data?.masjid || "Masjid Parit Setongkat", CX, detailsTopY + 138, "italic 700 34px Lato", goldRgba(0.96))
 
-      const bottomOrnY = Math.min(Math.max(detailsTopY + 162, H - 100), H - 52)
+      const bottomOrnY = Math.min(Math.max(detailsTopY + 170, H - 100), H - 52)
       ornLine(bottomOrnY, 80, W - 80)
-      ctx.fillStyle = "rgba(255,255,255,0.28)"; ctx.font = "italic 400 16px Lato"; ctx.textAlign = "center"
-      ctx.fillText("*Tertakluk kepada perubahan tanpa notis awal", CX, bottomOrnY + 36)
+      ctx.fillStyle = "rgba(255,255,255,0.28)"; ctx.font = "italic 400 18px Lato"; ctx.textAlign = "center"
+      ctx.fillText("*Tertakluk kepada perubahan tanpa notis awal", CX, bottomOrnY + 38)
     }
 
     // ── Preview (bukan terus muat turun) ──
@@ -1708,17 +1708,17 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
     const COLS = semSlot.length <= 4 ? 2 : 3
     const PAD = 30, GAP = 14
     const cardW = Math.floor((CW - PAD * 2 - GAP * (COLS - 1)) / COLS)
-    const cardH = 200
+    const cardH = 212
     const ROWS = Math.ceil(semSlot.length / COLS)
     const gridH = ROWS * cardH + Math.max(0, ROWS - 1) * GAP
 
     const logoY = 58, logoR = 42
     const orn1Y = logoY + logoR + 66
     const photoR = 145, photoX = CW / 2, photoY = orn1Y + 20 + photoR
-    const orn2Y = photoY + photoR + 110
-    const schY  = photoY + photoR + 132
-    const orn3Y = schY + 62
-    const rowStartY = schY + 80
+    const orn2Y = photoY + photoR + 124
+    const schY  = photoY + photoR + 160
+    const orn3Y = schY + 72
+    const rowStartY = schY + 90
     const CH = rowStartY + gridH + 90
 
     const canvas = document.createElement("canvas")
@@ -1828,10 +1828,10 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
       ctx.save(); ctx.globalAlpha = 0.55; ctx.strokeStyle = GOLD; ctx.lineWidth = 2
       ctx.beginPath(); ctx.arc(CW / 2, logoY, logoR + 2, 0, Math.PI * 2); ctx.stroke(); ctx.restore()
     }
-    ctx.fillStyle = "rgba(255,255,255,0.90)"; ctx.font = "700 22px Lato"; ctx.textAlign = "center"
-    ctx.fillText("BIRO PENDIDIKAN DAN DAKWAH", CW / 2, logoY + logoR + 34)
-    ctx.fillStyle = "rgba(255,255,255,0.45)"; ctx.font = "400 15px Lato"
-    ctx.fillText(data?.masjid || "Masjid Parit Setongkat", CW / 2, logoY + logoR + 57)
+    ctx.fillStyle = "rgba(255,255,255,0.90)"; ctx.font = "700 26px Lato"; ctx.textAlign = "center"
+    ctx.fillText("BIRO PENDIDIKAN DAN DAKWAH", CW / 2, logoY + logoR + 36)
+    ctx.fillStyle = "rgba(255,255,255,0.45)"; ctx.font = "400 18px Lato"
+    ctx.fillText(data?.masjid || "Masjid Parit Setongkat", CW / 2, logoY + logoR + 61)
     ornLine(orn1Y)
 
     // ── Speaker photo ──
@@ -1845,7 +1845,7 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
     } else {
       ctx.fillStyle = "rgba(255,255,255,0.07)"; ctx.fillRect(photoX - photoR, photoY - photoR, photoR * 2, photoR * 2)
       const initials = namaPenceramah.split(" ").slice(0, 2).map(w => w[0]).join("")
-      ctx.fillStyle = goldRgba(0.45); ctx.font = "700 80px Lato"; ctx.textAlign = "center"
+      ctx.fillStyle = goldRgba(0.45); ctx.font = "700 84px Lato"; ctx.textAlign = "center"
       ctx.fillText(initials.toUpperCase(), photoX, photoY + 28)
     }
     ctx.restore()
@@ -1858,11 +1858,11 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
 
     // ── Speaker name ──
     const prefix = namaPenceramah.includes("Ustazah") ? "Al-Fadhilah" : "Al-Fadhil"
-    ctx.fillStyle = goldRgba(0.82); ctx.font = "italic 400 23px Lato"; ctx.textAlign = "center"
-    ctx.fillText(prefix, CW / 2, photoY + photoR + 38)
+    ctx.fillStyle = goldRgba(0.82); ctx.font = "italic 400 26px Lato"; ctx.textAlign = "center"
+    ctx.fillText(prefix, CW / 2, photoY + photoR + 40)
 
-    let nf = 46; ctx.font = `700 ${nf}px 'Playfair Display'`
-    while (ctx.measureText(namaPenceramah).width > CW - 80 && nf > 26) { nf -= 2; ctx.font = `700 ${nf}px 'Playfair Display'` }
+    let nf = 50; ctx.font = `700 ${nf}px 'Playfair Display'`
+    while (ctx.measureText(namaPenceramah).width > CW - 80 && nf > 30) { nf -= 2; ctx.font = `700 ${nf}px 'Playfair Display'` }
     const nameG = ctx.createLinearGradient(CW / 2 - 320, 0, CW / 2 + 320, 0)
     nameG.addColorStop(0, GOLD); nameG.addColorStop(0.5, GOLDL); nameG.addColorStop(1, GOLD)
     ctx.fillStyle = nameG; ctx.textAlign = "center"
@@ -1875,12 +1875,12 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
     const KULIAH_PROGS = ["Kuliah Subuh","Kuliah Duha","Kuliah Asar","Kuliah Maghrib","Kuliah Isyak","Tazkirah Jumaat","Pengajian Am"]
     const firstProg = getNamaProgram(semSlot[0])
     const takwimLabel = KULIAH_PROGS.includes(firstProg) ? "TAKWIM KULIAH" : `TAKWIM ${firstProg.toUpperCase()}`
-    ctx.fillStyle = goldRgba(0.95); ctx.font = "700 32px Lato"; ctx.textAlign = "center"
+    ctx.fillStyle = goldRgba(0.95); ctx.font = "700 36px Lato"; ctx.textAlign = "center"
     ctx.fillText(takwimLabel, CW / 2, schY)
     const [tY, tM] = (bulanAktif?.bulan || "").split("-")
     const BNAM = ["","Januari","Februari","Mac","April","Mei","Jun","Julai","Ogos","September","Oktober","November","Disember"]
-    ctx.fillStyle = "rgba(255,255,255,0.72)"; ctx.font = "400 28px Lato"
-    ctx.fillText(`${BNAM[parseInt(tM)] || ""} ${tY || ""}`, CW / 2, schY + 48)
+    ctx.fillStyle = "rgba(255,255,255,0.72)"; ctx.font = "400 31px Lato"
+    ctx.fillText(`${BNAM[parseInt(tM)] || ""} ${tY || ""}`, CW / 2, schY + 52)
     ornLine(orn3Y, 56, CW - 56)
 
     // ── Calendar grid ──
@@ -1906,20 +1906,20 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
       // Date number + month name side by side
       const dateNum = formatTarikh(s.tarikh).replace(/\s.*$/, "") || "–"
       const dateMonthStr = BNAM[parseInt(tM)] || ""
-      ctx.fillStyle = "rgba(255,255,255,0.97)"; ctx.font = "900 78px Lato"; ctx.textAlign = "left"
-      ctx.fillText(dateNum, cx + 16, cy + 82)
+      ctx.fillStyle = "rgba(255,255,255,0.97)"; ctx.font = "900 82px Lato"; ctx.textAlign = "left"
+      ctx.fillText(dateNum, cx + 16, cy + 84)
       const numW = ctx.measureText(dateNum).width
-      ctx.fillStyle = "rgba(255,255,255,0.65)"; ctx.font = "400 24px Lato"
-      ctx.fillText(dateMonthStr, cx + 16 + numW + 8, cy + 64)
+      ctx.fillStyle = "rgba(255,255,255,0.65)"; ctx.font = "400 26px Lato"
+      ctx.fillText(dateMonthStr, cx + 16 + numW + 8, cy + 66)
 
       // Day name — top right
       ctx.textAlign = "right"
-      ctx.fillStyle = "rgba(255,255,255,0.55)"; ctx.font = "600 15px Lato"
+      ctx.fillStyle = "rgba(255,255,255,0.55)"; ctx.font = "600 17px Lato"
       ctx.fillText(s.hari || "", cx + cardW - 16, cy + 28)
 
       // Thin gold separator below date area
       ctx.save(); ctx.globalAlpha = 0.13; ctx.strokeStyle = GOLD; ctx.lineWidth = 1
-      ctx.beginPath(); ctx.moveTo(cx + 16, cy + 96); ctx.lineTo(cx + cardW - 16, cy + 96); ctx.stroke()
+      ctx.beginPath(); ctx.moveTo(cx + 16, cy + 100); ctx.lineTo(cx + cardW - 16, cy + 100); ctx.stroke()
       ctx.restore()
 
       // Program name
@@ -1927,25 +1927,25 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
       const _rawPengisian = getPengisian(s)
       const pengisian = ["umum","am","tiada","-","–"].includes(_rawPengisian.trim().toLowerCase()) ? "" : _rawPengisian
       ctx.textAlign = "left"
-      let pf = 20; ctx.font = `700 ${pf}px Lato`
-      while (ctx.measureText(namaProgram).width > cardW - 32 && pf > 13) { pf--; ctx.font = `700 ${pf}px Lato` }
+      let pf = 22; ctx.font = `700 ${pf}px Lato`
+      while (ctx.measureText(namaProgram).width > cardW - 32 && pf > 15) { pf--; ctx.font = `700 ${pf}px Lato` }
       ctx.fillStyle = "rgba(255,255,255,0.93)"
-      ctx.fillText(namaProgram, cx + 16, cy + (pengisian ? 116 : 130))
+      ctx.fillText(namaProgram, cx + 16, cy + (pengisian ? 122 : 136))
 
       // Topic / pengisian — muted italic
       if (pengisian) {
-        ctx.fillStyle = "rgba(255,255,255,0.72)"; ctx.font = "italic 400 16px Lato"
+        ctx.fillStyle = "rgba(255,255,255,0.72)"; ctx.font = "italic 400 18px Lato"
         let pt = pengisian
         while (ctx.measureText(pt).width > cardW - 32 && pt.length > 10) pt = pt.slice(0, -4) + "…"
-        ctx.fillText(pt, cx + 16, cy + 148)
+        ctx.fillText(pt, cx + 16, cy + 156)
       }
 
       // Waktu — bottom left, soft gold
       const WAKTU_KAD = { Subuh: "Selepas Solat Subuh", Duha: "9.00 pagi – 10.30 pagi", Asar: "Selepas Solat Asar", Maghrib: "Selepas Solat Maghrib", Isyak: "Selepas Solat Isyak", Jumaat: "12.30 tengah hari hingga masuk waktu Jumaat" }
       const waktuLabel = WAKTU_KAD[s.waktu] || s.waktu || ""
       if (waktuLabel) {
-        let wf = 14; ctx.font = `400 ${wf}px Lato`
-        while (ctx.measureText(waktuLabel).width > cardW - 32 && wf > 10) { wf--; ctx.font = `400 ${wf}px Lato` }
+        let wf = 16; ctx.font = `400 ${wf}px Lato`
+        while (ctx.measureText(waktuLabel).width > cardW - 32 && wf > 12) { wf--; ctx.font = `400 ${wf}px Lato` }
         ctx.fillStyle = goldRgba(0.52); ctx.textAlign = "left"
         ctx.fillText(waktuLabel, cx + 16, cy + cardH - 16)
       }
@@ -1954,9 +1954,9 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
     // ── Footer ──
     const footY = rowStartY + gridH + 14
     ornLine(footY, 56, CW - 56)
-    ctx.fillStyle = "rgba(255,255,255,0.32)"; ctx.font = "italic 400 14px Lato"; ctx.textAlign = "center"
-    ctx.fillText("Mohon maklumkan sebarang perubahan jadual kepada pihak masjid.", CW / 2, footY + 32)
-    ctx.fillText("Kerjasama ustaz/ustazah amat dihargai.", CW / 2, footY + 50)
+    ctx.fillStyle = "rgba(255,255,255,0.32)"; ctx.font = "italic 400 16px Lato"; ctx.textAlign = "center"
+    ctx.fillText("Mohon maklumkan sebarang perubahan jadual kepada pihak masjid.", CW / 2, footY + 34)
+    ctx.fillText("Kerjasama ustaz/ustazah amat dihargai.", CW / 2, footY + 54)
     const botG = ctx.createLinearGradient(0, 0, CW, 0)
     botG.addColorStop(0, "rgba(201,162,39,0)"); botG.addColorStop(0.5, "rgba(201,162,39,0.38)"); botG.addColorStop(1, "rgba(201,162,39,0)")
     ctx.fillStyle = botG; ctx.fillRect(0, CH - 5, CW, 5)
