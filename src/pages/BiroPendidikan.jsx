@@ -1381,7 +1381,6 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
         if (ctx.roundRect) ctx.roundRect(frameX, frameY, frameW, frameH, frameRadius)
         else ctx.rect(frameX, frameY, frameW, frameH)
         ctx.clip()
-        ctx.fillStyle = "#14141f"; ctx.fillRect(frameX, frameY, frameW, frameH)
         const natAspect = speakerImg.naturalHeight / speakerImg.naturalWidth
         const frmAspect = frameH / frameW
         let pdw, pdh, pdx, pdy
@@ -1617,7 +1616,6 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
         ctx.beginPath(); ctx.arc(CX, PY_photo, photoR + 18, 0, Math.PI * 2); ctx.stroke()
         ctx.save()
         ctx.beginPath(); ctx.arc(CX, PY_photo, photoR, 0, Math.PI * 2); ctx.clip()
-        ctx.fillStyle = "#14141f"; ctx.fillRect(CX - photoR, PY_photo - photoR, photoR * 2, photoR * 2)
         const imgA = speakerImg.naturalWidth / speakerImg.naturalHeight
         let pdw, pdh
         if (imgA > 1) { pdh = photoR * 2; pdw = pdh * imgA } else { pdw = photoR * 2; pdh = pdw / imgA }
@@ -1844,7 +1842,6 @@ export default function BiroPendidikan({ onKembali = () => {}, onSetBack }) {
 
     ctx.save(); ctx.beginPath(); ctx.arc(photoX, photoY, photoR, 0, Math.PI * 2); ctx.clip()
     if (photoImg) {
-      ctx.fillStyle = "#14141f"; ctx.fillRect(photoX - photoR, photoY - photoR, photoR * 2, photoR * 2)
       ctx.drawImage(photoImg, photoX - photoR, photoY - photoR, photoR * 2, photoR * 2)
     } else {
       ctx.fillStyle = "rgba(255,255,255,0.07)"; ctx.fillRect(photoX - photoR, photoY - photoR, photoR * 2, photoR * 2)
